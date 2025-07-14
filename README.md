@@ -1,43 +1,134 @@
 # CurrencyConverter
 
-TODO: Delete this and the text below, and describe your gem
+**CurrencyConverter** é uma gem Ruby simples para conversão de moedas, com suporte a taxas atuais e históricas, usando a API gratuita do [exchangerate.host](https://exchangerate.host/).
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/currency_converter`. To experiment with that code, run `bin/console` for an interactive prompt.
+## ✨ Recursos
 
-## Installation
+- Conversão entre duas moedas com taxa atual
+- Consulta das taxas ao vivo de múltiplas moedas
+- Consulta de taxas históricas em uma data específica
+- Suporte a configuração por `.env` ou programaticamente
 
-TODO: Replace `UPDATE_WITH_YOUR_GEM_NAME_IMMEDIATELY_AFTER_RELEASE_TO_RUBYGEMS_ORG` with your gem name right after releasing it to RubyGems.org. Please do not do it earlier due to security reasons. Alternatively, replace this section with instructions to install your gem from git if you don't plan to release to RubyGems.org.
+## 🔧 Instalação
 
-Install the gem and add to the application's Gemfile by executing:
+Adicione esta linha ao seu `Gemfile`:
 
-```bash
-bundle add UPDATE_WITH_YOUR_GEM_NAME_IMMEDIATELY_AFTER_RELEASE_TO_RUBYGEMS_ORG
+```ruby
+gem 'currency_converter', path: 'caminho/para/sua/gem'
 ```
 
-If bundler is not being used to manage dependencies, install the gem by executing:
+E depois execute:
 
 ```bash
-gem install UPDATE_WITH_YOUR_GEM_NAME_IMMEDIATELY_AFTER_RELEASE_TO_RUBYGEMS_ORG
+bundle install
 ```
 
-## Usage
+Ou instale diretamente com:
 
-TODO: Write usage instructions here
+```bash
+gem build currency_converter.gemspec
+gem install currency_converter-*.gem
+```
 
-## Development
+## 🔑 Obtendo a chave da API
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+1. Vá para: [https://exchangerate.host/#/](https://exchangerate.host/#/)
+2. Clique em **Get Free API Key**
+3. Registre-se com seu e-mail
+4. Você receberá um **access_key**, copie-o
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and the created tag, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+## 🛠️ Configuração
 
-## Contributing
+Você pode configurar a chave da API de duas formas:
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/currency_converter. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/[USERNAME]/currency_converter/blob/master/CODE_OF_CONDUCT.md).
+### 1. Via arquivo `.env`
 
-## License
+Crie um arquivo `.env` na raiz do seu projeto:
 
-The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
+```env
+EXCHANGE_RATE_API_KEY=sua_chave_aqui
+```
 
-## Code of Conduct
+E certifique-se de que a gem [`dotenv`](https://github.com/bkeepers/dotenv) esteja carregada. No seu código principal:
 
-Everyone interacting in the CurrencyConverter project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/currency_converter/blob/master/CODE_OF_CONDUCT.md).
+```ruby
+require 'dotenv'
+Dotenv.load
+```
+
+### 2. Manualmente no código
+
+```ruby
+CurrencyConverter.configure do |config|
+  config.access_key = "sua_chave_aqui"
+end
+```
+
+## 📦 Uso
+
+### Conversão de valores (`convert`)
+
+```ruby
+require 'currency_converter'
+
+result = CurrencyConverter.convert(100, from: 'USD', to: 'BRL')
+puts "100 USD em BRL: #{result}"
+```
+
+### Taxas ao vivo (`live`)
+
+Retorna taxas de câmbio em tempo real com base na moeda base.
+
+```ruby
+CurrencyConverter.live(base: 'USD', currencies: ['EUR', 'GBP'])
+# => { "USDEUR"=>0.91, "USDGBP"=>0.78, ... }
+```
+
+Se `currencies` for omitido, retorna todas as taxas disponíveis.
+
+### Taxas históricas (`historical`)
+
+Consulta taxas de uma data específica (formato `YYYY-MM-DD`):
+
+```ruby
+CurrencyConverter.historical(date: '2024-01-01', base: 'EUR', currencies: ['USD', 'JPY'])
+# => { "EURUSD"=>1.09, "EURJPY"=>157.15 }
+```
+
+## ❗ Tratamento de erros
+
+- Se a requisição falhar ou os parâmetros forem inválidos, uma exceção `CurrencyConverter::Error` será lançada.
+- Certifique-se de capturar exceções onde apropriado:
+
+```ruby
+begin
+  CurrencyConverter.convert(100, from: 'USD', to: 'EUR')
+rescue CurrencyConverter::Error => e
+  puts "Erro na conversão: #{e.message}"
+end
+```
+
+## 📁 Estrutura do Projeto
+
+```
+currency_converter/
+├── lib/
+│   ├── currency_converter.rb
+│   ├── currency_converter/version.rb
+│   └── currency_converter/configuration.rb
+├── .env
+├── currency_converter.gemspec
+└── README.md
+```
+
+## 📄 Licença
+
+Esta gem é open-source sob a licença MIT.
+
+## 🤝 Contribuições
+
+Pull requests são bem-vindos! Para grandes mudanças, por favor, abra uma issue primeiro para discutir o que você gostaria de modificar.
+
+## 📬 Contato
+
+Linkedin: [Kelvin Lehrback](https://www.linkedin.com/in/kelvin-lehrback/)
