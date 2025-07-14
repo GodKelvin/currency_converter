@@ -14,7 +14,7 @@
 Adicione esta linha ao seu `Gemfile`:
 
 ```ruby
-gem 'currency_converter', path: 'https://github.com/GodKelvin/currency_converter.git',  tag: 'v0.1.0'
+gem 'currency_converter', git: 'https://github.com/GodKelvin/currency_converter.git',  tag: 'v0.1.0'
 ```
 
 E depois execute:
