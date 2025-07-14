@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.email = ["@gmail.com"]
 
   spec.summary = "Currency converter"
-  spec.description = "TODO: Write a longer description or delete this line."
+  spec.description = "Gem para conversão de moedas usando a API exchangerate.host"
   spec.homepage = "https://github.com/GodKelvin/currency_converter"
   spec.license = "MIT"
   spec.required_ruby_version = ">= 3.0.0"
