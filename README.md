@@ -1,6 +1,6 @@
-# CurrencyConverter
+# CurrencyConverterPlus
 
-**CurrencyConverter** é uma gem Ruby simples para conversão de moedas, com suporte a taxas atuais e históricas, usando a API gratuita do [exchangerate.host](https://exchangerate.host/).
+**CurrencyConverterPlus** é uma gem Ruby simples para conversão de moedas, com suporte a taxas atuais e históricas, usando a API gratuita do [exchangerate.host](https://exchangerate.host/).
 
 ## ✨ Recursos
 
@@ -11,23 +11,21 @@
 
 ## 🔧 Instalação
 
-Adicione esta linha ao seu `Gemfile`:
+Você pode instalar a gem diretamente pelo RubyGems:
 
+```bash
+gem install currency_converter_plus
+```
+
+Ou se preferir, adicione esta linha ao seu `Gemfile`:
 ```ruby
-gem 'currency_converter', git: 'https://github.com/GodKelvin/currency_converter.git',  tag: 'v0.1.0'
+gem 'currency_converter_plus', git: 'https://github.com/GodKelvin/currency_converter_plus.git',  tag: 'v0.1.0'
 ```
 
 E depois execute:
 
 ```bash
 bundle install
-```
-
-Ou instale diretamente com:
-
-```bash
-gem build currency_converter.gemspec
-gem install currency_converter-*.gem
 ```
 
 ## 🔑 Obtendo a chave da API
@@ -69,7 +67,7 @@ end
 ### Conversão de valores (`convert`)
 
 ```ruby
-require 'currency_converter'
+require 'currency_converter_plus'
 
 result = CurrencyConverter.convert(100, from: 'USD', to: 'BRL')
 puts "100 USD em BRL: #{result}"
