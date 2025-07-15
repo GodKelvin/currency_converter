@@ -67,7 +67,7 @@ end
 ### Conversão de valores (`convert`)
 
 ```ruby
-require 'currency_converter_plus'
+require 'currency_converter'
 
 result = CurrencyConverter.convert(100, from: 'USD', to: 'BRL')
 puts "100 USD em BRL: #{result}"
